@@ -16,13 +16,13 @@ SELECT * FROM students WHERE YEAR(DateOfBirth) BETWEEN 2000 AND 2005;
 SELECT * FROM students ORDER BY LastName DESC;
 
 -- 6. Find the names of students and the courses they are enrolled in.
-SELECT s.FirstName, s.LastName, c.CourseName FROM students s JOIN enrollments e ON s.StudentID = e.StudentID JOIN courses c ON e.CourseID = c.CourseID;
+SELECT students.FirstName, students.LastName, courses.CourseName FROM students JOIN enrollments ON students.StudentID = enrollments.StudentID JOIN courses ON enrollments.CourseID = courses.CourseID;
 
 -- 7. List all students and their courses, ensuring students without courses are included (LEFT JOIN).
-SELECT s.FirstName, s.LastName, c.CourseName FROM students s LEFT JOIN enrollments e ON s.StudentID = e.StudentID LEFT JOIN courses c ON e.CourseID = c.CourseID;
+SELECT students.FirstName, students.LastName, courses.CourseName FROM students LEFT JOIN enrollments ON students.StudentID = enrollments.StudentID LEFT JOIN courses ON enrollments.CourseID = courses.CourseID;
 
 -- 8. Find all courses with no students enrolled (LEFT JOIN).
-SELECT c.CourseName FROM courses c LEFT JOIN enrollments e ON c.CourseID = e.CourseID WHERE e.CourseID IS NULL;
+SELECT courses.CourseName FROM courses LEFT JOIN enrollments ON courses.CourseID = enrollments.CourseID WHERE enrollments.CourseID IS NULL;
 
 -- 10. List courses and show the number of students enrolled in each course.
-SELECT c.CourseName, COUNT(e.StudentID) FROM courses c LEFT JOIN enrollments e ON c.CourseID = e.CourseID GROUP BY c.CourseName;
+SELECT courses.CourseName, COUNT(enrollments.StudentID) FROM courses LEFT JOIN enrollments ON courses.CourseID = enrollments.CourseID GROUP BY courses.CourseName;
